@@ -1,0 +1,16 @@
+/*
+Theme Name:
+Theme URI:
+Author: merelyiGor
+Author URI:
+Description:
+Version: 1.0
+Tags:
+Text Domain:
+*/
+
+/*блокирует надпись zzz.com.ua*/
+
+.cbalink {
+    display: none;!important;
+}
