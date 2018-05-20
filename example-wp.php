@@ -2,7 +2,15 @@
 /**
  * Регистрация меню в шаблоне без регистрации в function
  * ---------------------------------------------------------------------------------------------------------------------
- */
+ */?>
+
+<?php/************** ------- Указание название шаблона стр ------- **************/
+/*
+Template Name: page_template blog-page
+*/
+?>
+
+<?php
 wp_nav_menu( array(
 	'theme_location'  => 'Top',
 	'menu'	  => 'Боковое',
@@ -11,7 +19,9 @@ wp_nav_menu( array(
 	'menu_id'	  => 'main-top',
 	'menu_class'	  => 'menu',
 	'before'	  => ''
-) );
+) );?>
+
+<?php
 function my_wp_nav_menu_args($args = '') //убираем контейнер меню
 {
 	$args['container'] = false;
