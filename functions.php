@@ -11,7 +11,7 @@
 include_once 'dist/add-theme-support.php'; // Глобальные настройки темы и регистрация настроек
 include_once 'dist/style-theme.php'; // Подключение стилей
 include_once 'dist/post-hide.php'; // Скрытие постов учасников от других учасников которые не являются их авторами
-include_once 'dist/register-menu.php'; // Регистрация меню + убираем контейнер + убираю классы и id элементов меню
+include_once 'dist/nav-register-menu.php'; // Регистрация меню + убираем контейнер + убираю классы и id элементов меню
 include_once 'dist/new-gravatar.php'; // Функция добавления своего аватара в админку для дефолтного отображения
 include_once 'dist/language-translit.php'; // Перевод урлов в транслит с русс названий
 include_once 'dist/contact-form-7.php'; // Надстройки для плагина CF7
