@@ -29,19 +29,25 @@ while (have_posts()) : the_post(); ?>
  * ---------------------------------------------------------------------------------------------------------------------
  **/
 $args = array(
-    'post_type' => 'post', // Указание типа поста
-    'publish' => true, // Указываем для вывода только посты в статусе опубликовано
-    'paged' => get_query_var('paged'), // получение пагинации через $wp_query
+    'post_type'         => 'post', // Тип поста
+    'publish'           => true, // Только опубликованные
+    'posts_per_page'    => 7, // Количевство постов на странице
+    'paged'             => get_query_var('paged'), // Пагинация через $wp_query
 );
 
-query_posts($args); // Забираем все посты wp
+query_posts($args);
 
-    while ( have_posts()) : the_post(); // цыкл вывода постов
+    while ( have_posts()) : the_post();
 
           //подключаем шаблон с контентом и тд поста
             get_template_part('template/post');
 
     endwhile;
+the_posts_pagination( array(
+    'mid_size' => 2, //страниц до ...
+    'end_size' => 2, // страниц после ...
+    'show_all' => 2, // показать все
+) ); // Вывод пагинации - https://wp-kama.ru/function/the_posts_pagination ?>  <?php
 /**
  * Вывод постов на любой странице с шаблоном  - вернет посты с указанным типом post_type
  * ---------------------------------------------------------------------------------------------------------------------

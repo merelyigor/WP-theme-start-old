@@ -26,6 +26,8 @@ include_once 'dist/wpml-plugin-custm.php'; // WPML настройки
 include_once 'dist/json-parser-array.php'; // Работа с JSON масивами данных для вывода в верстку
 include_once 'dist/ajax-form-method.php'; // Отправка данных AJAX из формы отправки данных
 include_once 'dist/validator.php'; // Валидатор для проверки форм на email, phone, file --- использует отправку AJAX форм
+include_once 'dist/wp-navigations-inc.php'; // Настройка пагинации 1 2 3 4 ...
+include_once 'dist/wp-admin-ccs.php'; // Добавление собственных стилей css для стр. регистрации, входа или админ панели
 
 
 
