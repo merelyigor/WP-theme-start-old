@@ -52,6 +52,33 @@ function hwl_home_pagesize( $query ) {
 }
 
 
+
+
+/************** ------- настройка вывода количевства найденых постов --- вывод <?= search_results_title(); ?> ------- **************/
+function search_results_title() {
+    if( is_search() ) {
+
+        if( is_search() ) {
+
+            global $wp_query;
+
+            if( $wp_query->post_count == 1 ) {
+                $result_title .= 'найдено всего 1 результат';
+            } else {
+                $result_title .= $wp_query->found_posts . ' | найденых результатов';
+            }
+
+            $result_title .= " по запросу «" . wp_specialchars($wp_query->query_vars['s'], 1) . "»";
+
+            echo $result_title;
+            wp_reset_postdata();
+
+        }
+
+    }
+}
+
+
 /**  -------------------- Весь список свойств которые можно использовать вместо условного тега
 $query->is_404
 $query->is_admin
