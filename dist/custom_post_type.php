@@ -7,20 +7,32 @@
 add_action( 'init', 'true_register_post_type_init' ); // Использовать функцию только внутри хука init
 
 function true_register_post_type_init() {
+
 	$labels = array(
-		'name' => 'Обьявления',
-		'singular_name' => 'Обьявление', // админ панель Добавить->Обьявление
-		'add_new' => 'Добавить Обьявление',
-		'add_new_item' => 'Добавить новое Обьявление', // заголовок тега <title>
-		'edit_item' => 'Редактировать Обьявление',
-		'new_item' => 'Новае Обьявление',
-		'all_items' => 'Все Обьявления',
-		'view_item' => 'Просмотреть Обьявлений на сайте',
-		'search_items' => 'Искать Обьявление',
-		'not_found' =>  'Обьявлений не найдено.',
-		'not_found_in_trash' => 'В корзине нет Обьявлений.',
-		'menu_name' => 'Merely_igor' // ссылка в меню в админке
+		'name' => 'Обьявления',// основное название для типа записи, обычно во множественном числе.
+		'singular_name' => 'Обьявление', // название для одной записи этого типа.
+		'add_new' => 'Добавить Обьявление',// текст для добавления новой записи, как "добавить новый" у постов в админ-панели.
+		'add_new_item' => 'Добавить новое Обьявление',// текст заголовка у вновь создаваемой записи в админ-панели.
+		'edit_item' => 'Редактировать Обьявление',// текст для редактирования типа записи.
+		'new_item' => 'Новае Обьявление',// текст новой записи.
+		'all_items' => 'Все Обьявления',// Все записи. По умолчанию равен menu_name
+		'view_item' => 'Просмотреть Обьявлений на сайте',// текст для просмотра записи этого типа.
+		'search_items' => 'Искать Обьявление',// текст для поиска по этим типам записи.
+		'not_found' =>  'Обьявлений не найдено.',// текст, если в результате поиска ничего не было найдено.
+		'not_found_in_trash' => 'В корзине нет Обьявлений.',// текст, если не было найдено в корзине.
+		'menu_name' => 'Обьявления', // Название меню. По умолчанию равен name.
+        'insert_into_item' => 'Вставить в запись', // Вставить в запись
+        'uploaded_to_this_item' => 'Загружено для этой записи',// Загружено для этой записи
+        'featured_image' => 'Миниатюра записи',// Миниатюра записи
+        'set_featured_image' => 'Установить миниатюру записи',// Установить миниатюру записи
+        'remove_featured_image' => 'Удалить миниатюру записи',// Удалить миниатюру записи
+        'use_featured_image' => 'Использовать как миниатюру записи',// Использовать как миниатюру записи
+        'filter_items_list' => 'Фильтровать список записей',// Фильтровать список записей
+        'items_list_navigation' => 'Навигация по записям',// Навигация по записям
+        'items_list' => 'Список записей',// Список записей
+        'attributes' => 'рубрики',// Название для метабокса атрибутов записи
 	);
+
 	$args = array(
 		'labels' => $labels,
 		'public' => true,
@@ -28,10 +40,58 @@ function true_register_post_type_init() {
 		'has_archive' => true,
 		'menu_icon' => get_stylesheet_directory_uri() .'/img/custom_post_icon.png', // путь к иконке для админки
 		'menu_position' => 20, // порядок в меню админки
-		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail')
+        'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'revisions'),
+        'taxonomies' => array( 'category') // указывает что у данного типа поста будут рубрики
 	);
-	register_post_type('the_name_post_type', $args); //регистрация названия типа постов
+
+	register_post_type('the_name_post_type', $args); //регистрация названия типа постов для кастомного поста
+    flush_rewrite_rules(); // перезагрузка урлов для правильного построения ЧПУ wp после регистрации типа поста
 }
+
+/************** ------- Привязка таксономии для кастомного поста ------- **************/
+add_action( 'init', 'post_tag_for_custom_post' );
+function post_tag_for_custom_post(){ // в данном случае привязываются рубрики к кастомному посту
+    register_taxonomy_for_object_type( 'category', 'the_name_post_type');
+} // указываем название таксономии и тип поста к которому она будет привязана
+
+
+/************** ------- Регистрация таксономии для кастомного поста ------- **************/
+// хук, через который подключается функция
+// регистрирующая новые таксономии (create_custom_taxonomies)
+add_action( 'init', 'create_custom_taxonomies' );
+
+// функция, создающая новую таксономию "Жанр" и "writers" для постов типа "custom"
+function create_custom_taxonomies(){
+    // определяем заголовки для 'genre'
+    $labels = array(
+        'name' => _x( 'Жанры', 'Главное название тасономии' ), // Имя таксономии, обычно во множественном числе.
+        'singular_name' => _x( 'Жанр', 'Название одной таксономии' ), // Название для одного элемента этой таксономии.
+        'search_items' =>  __( 'Поиск по Жанрам' ), // Текст для поиска элемента таксономии.
+        'all_items' => __( 'Все Жанры' ), // Текст для всех элементов.
+        'parent_item' => __( 'Родительский жанр' ), // Текст для родительского элемента таксономии.
+        'parent_item_colon' => __( 'Родительский жанр:' ), // Текст для родительского элемента таксономии, тоже что и parent_item но с двоеточием в конце.
+        'edit_item' => __( 'Редактировать жанр' ), // Текст для редактирования элемента.
+        'update_item' => __( 'Обновить жанр' ), // Текст для обновления элемента.
+        'add_new_item' => __( 'Добавить новый жанр' ), // Текст для добавления нового элемента таксономии.
+        'view_item' => __( 'Посмотреть жанр' ), // Текст для просмотра термина таксономии. По умолчанию: "Посмотреть категорию"
+        'new_item_name' => __( 'Создать новый жанр' ), // Текст для создания нового элемента таксономии.
+        'menu_name' => __( 'Жанр' ), // Текст для названия меню.
+    );
+
+    // Добавляем древовидную таксономию 'genre' (как категории)
+    register_taxonomy('Жанр', array('the_name_post_type'), array(
+        'hierarchical' => true, // древовидное вложение
+        'labels' => $labels, // берется с name
+        'show_ui' => true, // показать в админке
+        'query_var' => true, // подключение параметра rewrite
+        'rewrite' => array( 'slug' => 'Жанр' ),
+    ));
+}
+
+
+
+
+
 
 
 
@@ -47,12 +107,16 @@ function true_post_type_messages( $messages ) {
 		2 => 'Параметр обновлён.',
 		3 => 'Параметр удалён.',
 		4 => 'Обьявление обновлено',
-		5 => isset($_GET['revision']) ? sprintf( 'Обьявление восстановлено из редакции: %s', wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		5 => isset($_GET['revision']) ? sprintf( 'Обьявление восстановлено из редакции: %s',
+            wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		6 => sprintf( 'Обьявление опубликовано на сайте. <a href="%s">Просмотреть</a>', esc_url( get_permalink($post_ID) ) ),
 		7 => 'Обьявление сохранено.',
-		8 => sprintf( 'Отправлено на проверку. <a target="_blank" href="%s">Просмотреть</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		9 => sprintf( 'Запланировано на публикацию: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Просмотреть</a>', date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		10 => sprintf( 'Черновик обновлён. <a target="_blank" href="%s">Просмотреть</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		8 => sprintf( 'Отправлено на проверку. <a target="_blank" href="%s">Просмотреть</a>',
+            esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		9 => sprintf( 'Запланировано на публикацию: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Просмотреть</a>',
+            date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+		10 => sprintf( 'Черновик обновлён. <a target="_blank" href="%s">Просмотреть</a>',
+            esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 	);
 
 	return $messages;
