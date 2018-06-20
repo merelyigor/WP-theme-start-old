@@ -1,4 +1,6 @@
 
+// Подключить нужно только после vendor или jquery
+
 $('.class form').submit(function(event){ //отслеживается первая форма которая вложена в элемент с классом .class
     event.preventDefault(); // также по мимо класса можно писать id ('#id form')
 

@@ -5,13 +5,13 @@
  */
 
 /************** ------- Подключаю myajax от wordpress к скриптам темы -- должно вывести в скриптах скрипт myajax ------- **************/
-add_action( 'wp_enqueue_scripts', 'myajax_data', 99 ); //подключаю скрипты myajax к теме через свои скрипты - скрипты подключать только через  wp_enqueue_scripts
+add_action( 'wp_enqueue_scripts', 'myajax_data' ); //подключаю скрипты myajax к теме через свои скрипты - скрипты подключать только через  wp_enqueue_scripts
 function myajax_data(){
 
 
-    wp_localize_script( 'main', 'myajax',
+    wp_localize_script( 'custom', 'myajax', // подключаю myajax с скрипту с хендллером main.js
         array(
-            'url' => admin_url('admin-ajax.php') //забираю данные js которые в js файле передаются в wp
+            'url' => get_template_directory_uri().'/index.php' //передаю данные из js в данный файл (index данной темы)
         )
     );
 
@@ -20,7 +20,7 @@ function myajax_data(){
 //              возвращает такой скрипт в футер
 //              <script type="text/javascript">
 //                  /* <![CDATA[ */
-//                  var myajax = {"url":"http:\/\/ivs.polyarix.com\/wp-admin\/admin-ajax.php"};
+//                  var myajax = {"url":"http:\/\/blufixx\/wp-content\/themes\/blufixx\/index.php"};
 //                  /* ]]> */
 //              </script>
 

@@ -68,5 +68,7 @@ function the_theme_name_style_default()
 	wp_enqueue_script('название скрипта.js', '//site.com/styles/built.css', array(), '1.0');
 	//подключаем внешние скрипты из интернета в footer без https://
 	wp_enqueue_script('название скрипта.js', '//site.com/styles/built.css', array(), '1.0', true);
+    //подключаем AJAX скрипта от wp
+    wp_enqueue_script('main', get_site_url() . '/wp-admin/admin-ajax.php', array(),time(),true);
 }
 add_action('wp_print_styles', 'the_theme_name_style_default');

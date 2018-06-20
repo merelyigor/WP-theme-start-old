@@ -1,8 +1,10 @@
 <?php the_permalink(); // Ссылка на пост ?>
 
-<?php the_post_thumbnail("medium"); // Выводит изображение поста в теге <img> ?>
+<?php the_post_thumbnail($id, 'medium', $attr); // Выводит изображение поста в теге <img> --- large - medium - thumbnail ?>
 
-<?= get_the_post_thumbnail_url(); // Выводит ссылкку на изображение поста ?>
+<?= get_the_post_thumbnail( $id, 'medium', $attr ); // Получает изображение поста в теге <img> --- large - medium - thumbnail ?>
+
+<?= get_the_post_thumbnail_url($id,'medium',$attr); // Выводит ссылкку на изображение поста --- large - medium - thumbnail ?>
 
 <?php the_title(); // Заголовок поста ?>
 

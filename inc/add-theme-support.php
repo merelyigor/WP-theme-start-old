@@ -66,3 +66,19 @@ function the_theme_name()
 }
 
 add_action('after_setup_theme', 'the_theme_name');
+
+
+
+
+
+
+
+
+/************** ------- Делаем редирект 301 с высокого регистра на нижний - с http://semple-site.ru/POSTUPLENIE в http://semple-site.rupostuplenie ------- **************/
+
+if ( $_SERVER['REQUEST_URI'] != strtolower( $_SERVER['REQUEST_URI']) ) {
+    header('Location: http://'.$_SERVER['HTTP_HOST'] .
+        strtolower($_SERVER['REQUEST_URI']), true, 301);
+    exit();
+}
+
