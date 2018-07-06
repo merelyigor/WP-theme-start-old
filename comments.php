@@ -179,3 +179,88 @@ endif; ?>
 
         <?php endif; // закрывается вывод формы коментариев ?>
     </div> <?php/************** ------- начало вывода комментариев - обертка всех комментов и формы коментариев ------- **************/?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="reviews__comm">
+    <?php
+
+
+    function process_comment($comment, $args, $depth){
+    $GLOBALS['comment'] = $comment;
+    ?>
+
+    <li <?php comment_class(); ?>>
+        <img src="//www.gravatar.com/avatar/<?php echo md5(get_comment_author_email()) ?>?d=mm&s=150" class="idx__feedback__info__slider__img">
+        <div class="idx__feedback__info__slider__name"><?php comment_author_link(); ?></div>
+        <div class="idx__feedback__info__slider__date"><?php comment_date('d F Y h:i'); ?></div>
+        <div class="idx__feedback__info__slider__text"><?php comment_text(); ?></div>
+
+        <?php } ?>
+
+
+
+        <ul class="idx__feedback__info__slider reviews__comm__slider">
+
+            <?php
+            $comments = get_comments(array(
+                'post_id' => 0,
+                'status' => 'approve',
+                'order'               => 'DESC',
+            ));
+
+            wp_list_comments( array(
+                'type' => 'comment',
+                'style' => 'li',
+                'callback' => 'process_comment',
+                'walker' => new CustomCommentsWalker,
+            ), $comments);
+            ?>
+
+
+        </ul>
+
+
+        <div class="reviews__comm__pag">
+            <?php custom_comment_pagination(1); ?>
+        </div>
+
+
+        <div class="reviews__comm__ctrls">
+            <div class="reviews__comm__ctrls__btn reviews__comm__ctrls__btn--left reviews__comm__ctrls__btn--disable">
+                <div class="reviews__comm__ctrls__btn__icon">
+                    <svg><use xlink:href="#arrow-left"></use></svg>
+                </div>
+            </div>
+            <div class="reviews__comm__ctrls__text js-give-review">Оставьте свой отзыв</div>
+            <div class="reviews__comm__ctrls__btn reviews__comm__ctrls__btn--right reviews__comm__ctrls__btn--right">
+                <div class="reviews__comm__ctrls__btn__icon">
+                    <svg><use xlink:href="#arrow-right"></use></svg>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script>
+
+
+
+</script>
+
+
