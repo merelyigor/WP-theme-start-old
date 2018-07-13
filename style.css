@@ -11,6 +11,10 @@ Text Domain:
 
 /*блокирует надпись zzz.com.ua*/
 
+
+#dd-popup {
+    display:none!important;
+}
 .cbalink {
-    display: none;!important;
+    display: none!important;
 }

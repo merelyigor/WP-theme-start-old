@@ -7,6 +7,28 @@
 
 
 
+
+
+<?php  /************** ------- Запись и присвоение переменной из глобального масива wp - в виде ключа и значения в масиве глобальная переменная ------- **************/
+$GLOBALS['name'] = $name;
+$name = $GLOBALS['name']
+ /************** ------- Запись и присвоение переменной из глобального масива wp - в виде ключа и значения в масиве глобальная переменная ------- **************/?>
+
+
+<?php  /************** ------- перебор строки из символов от 0 до 200 символов с обрезкой лишнего и запись всего в результат ------- **************/
+$result = substr(htmlspecialchars( $content_string), 0, 200);
+ /************** ------- перебор строки из символов от 0 до 200 символов с обрезкой лишнего и запись всего в результат ------- **************/?>
+
+
+<?php  /************** ------- условие на вывод номера страницы начиная со второй страницы ------- **************/
+$page_txt = ' - cтраница ';
+
+if (get_query_var('cpage') != 0){                   // если текущая страница не ровна 0 странице в пагинации
+    echo $page_txt; echo get_query_var('cpage');   // вывод текущего номера страницы в любое место страницы с пагинацией
+}
+ /************** ------- условие на вывод номера страницы начиная со второй страницы ------- **************/?>
+
+
 <?php  /************** ------- Указание название шаблона стр ------- **************/?>
 <?php/*
 Template Name: page_template blog-page
@@ -167,11 +189,51 @@ endif;?>
 
 
 
+<?php  /**  Вывод email из кастомных полей - перебор имейлов для отправки emailacf  **/?>
+<?php
+if(count($response['errors'])) {
+wp_send_json_error($response);
+} else {
+$emails_array = get_field('emails_order', 'option');
+
+function emails_array_to_string($emails_array){
+$emails_list='';
+
+end($emails_array); // перемещаем указатель в конец массива
+$last = key($emails_array); // получаем последний ключ
+
+foreach ($emails_array as $k => $v){
+$emails_list .= $v['email'];//
+
+if ($k !== $last) {
+$emails_list .=  ', ';
+} // если текущий ключ не последний, выводим запятую
+}
+
+return $emails_list;
+}}
+
+$emails = emails_array_to_string($emails_array);
 
 
+    $headers = "MIME-Version: 1.0\r\n"."Content-type: text/plain; charset=utf-8\r\n"."Заявка на обратный звонок на $site_name \r\n";
+
+    $sendSuccess = wp_mail(
+        $emails,
+        $subject,
+        $message,
+        $headers
+    );
 
 
+    if(!$sendSuccess){
+        wp_send_json_error("WP_mail  not send");
+    }
 
+    wp_send_json_success('<b>Gracias!</b><br>Su mensage a sido enviado!');
+
+}
+?>
 
 
 
