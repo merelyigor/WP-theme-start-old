@@ -3,8 +3,8 @@
 function search_results_exclude($query) {
     if ($query->is_search) {
         $query->set('post_type', 'post'); // исключить все страницы (не посты)
-        $query->set('cat','4298,1015'); // исключить рубрики по ID
-        $query->set('post__not_in', array( 350, 13, 218 )); // исключить посты или страницы по ID
+//        $query->set('cat','4298,1015'); // исключить рубрики по ID
+//        $query->set('post__not_in', array( 350, 13, 218 )); // исключить посты или страницы по ID
     }
     return $query;
 }
@@ -14,7 +14,7 @@ add_filter('pre_get_posts','search_results_exclude');
 /************** ------- включает кастомные посты в результаты поиска ------- **************/
 function search_add($query) {
     if ($query->is_search) {
-        $query->set('post_type', array('post', 'movie') ); // в поиске можно искать стандартным постам 'post' и так же постам с типом 'movie'
+        $query->set('post_type', array('post', 'type_post') ); // в поиске можно искать стандартным постам 'post' и так же постам с типом 'movie'
     }
     return $query;
 }
@@ -22,34 +22,34 @@ add_filter('pre_get_posts','search_add');
 
 
 /************** ------- выводить в поиске только посты принадлежащие к данным рубрикам или категориям ------- **************/
-function searchcategory($query) {
-    if ($query->is_search) {
-        $query->set(category__in, array(1,84)); // несколько разделять запятыми
-        $query->set(category__in, 84);// одна рубрика
-    }
-    return $query;
-}
-add_filter('pre_get_posts','searchcategory');
+//function searchcategory($query) {
+//    if ($query->is_search) {
+//        $query->set(category__in, array(1,84)); // несколько разделять запятыми
+//        $query->set(category__in, 84);// одна рубрика
+//    }
+//    return $query;
+//}
+//add_filter('pre_get_posts','searchcategory');
 
 
 
 /************** ------- Изменение количества выводимых постов на странице результата поиска ------- **************/
-add_action('pre_get_posts', 'hwl_home_pagesize', 1 );
-function hwl_home_pagesize( $query ) {
-    // Выходим, если это админ-панель или не основной запрос.
-    if( is_admin() || ! $query->is_main_query() )
-        return;
-
-    if( is_home() ){
-        // Выводим только 1 пост на главной странице
-        $query->set( 'posts_per_page', 1 );
-    }
-
-    if( $query->is_post_type_archive('movie') ){
-        // Выводим 50 записей если это архив типа записи 'movie'
-        $query->set( 'posts_per_page', 50 );
-    }
-}
+//add_action('pre_get_posts', 'hwl_home_pagesize', 1 );
+//function hwl_home_pagesize( $query ) {
+//    // Выходим, если это админ-панель или не основной запрос.
+//    if( is_admin() || ! $query->is_main_query() )
+//        return;
+//
+//    if( is_home() ){
+//        // Выводим только 1 пост на главной странице
+//        $query->set( 'posts_per_page', 1 );
+//    }
+//
+//    if( $query->is_post_type_archive('type_post') ){
+//        // Выводим 50 записей если это архив кастомного типа записи 'type_post'
+//        $query->set( 'posts_per_page', 50 );
+//    }
+//}
 
 
 

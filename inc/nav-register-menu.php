@@ -7,11 +7,12 @@
  * для вывода нижнего меню вставте --- <?php wp_nav_menu('menu_class=bmenu&theme_location=bottom'); ?>
  * ---------------------------------------------------------------------------------------------------------------------
  */
-register_nav_menus(array(
-	'name-identification-menu-1' => 'меню 1',    //Название идентификатора меню в шаблоне
-	'name-identification-menu-2' => 'меню 2',    //Название идентификатора меню в шаблоне
-	'name-identification-menu-3' => 'меню 3',     //Название идентификатора меню в шаблоне
-));
+
+
+register_nav_menus( array(
+    'primary' => __( 'Primary Menu', 'theme-name' ), //Название идентификатора меню в шаблоне
+    'top-bar' => __( 'Top Bar Menu', 'theme-name' )  //Название идентификатора меню в шаблоне
+) );
 
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args');
 function my_wp_nav_menu_args($args = '')

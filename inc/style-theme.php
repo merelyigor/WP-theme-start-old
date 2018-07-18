@@ -71,4 +71,4 @@ function the_theme_name_style_default()
     //подключаем AJAX скрипта от wp
     wp_enqueue_script('main', get_site_url() . '/wp-admin/admin-ajax.php', array(),time(),true);
 }
-add_action('wp_print_styles', 'the_theme_name_style_default');
+add_action('wp_enqueue_scripts', 'the_theme_name_style_default');

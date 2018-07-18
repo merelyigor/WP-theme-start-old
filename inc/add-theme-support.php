@@ -12,8 +12,8 @@ function the_theme_name()
 	//Если активировать эту опцию для темы,
 	// то в теме не нужно устанавливать метатег <title><?php wp_title() ?/><!--</title>
 	// - он будет подключен автоматически через хук wp_head.-->
-	/************** для вывода в шапке подключать так ------- <title><?php bloginfo('name'); ?>
-	<?php is_home() ? bloginfo('description') : wp_title(''); ?></title> ------- **************/
+	/************** для вывода в шапке подключать так ------- <title><?php bloginfo('name'); ?> |
+    <?php is_home() ? bloginfo('description') : wp_title(''); ?></title> ------- **************/
 
 
 
@@ -27,9 +27,10 @@ function the_theme_name()
 
 
 
-	/************** ------- медиа (картинки) в постах и их размер ------- **************/
-	add_theme_support('post-thumbnails');
-	set_post_thumbnail_size(450, 450);
+	/************** ------- медиа (картинки) в постах и их размер - уже есть в post-settings.php inc ------- **************/
+//	add_theme_support('post-thumbnails');
+//	set_post_thumbnail_size(450, 450);
+//    add_image_size( 'name-theme', 450, 450, true );
 	//Позволяет устанавливать миниатюру посту
 	// Вы можете передать второй аргумент функции в виде массива, в котором указать для каких типов постов разрешить миниатюры:
 	//	Чтобы вывести миниатюру в файле темы (index.php или single.php и т.д.) используем функцию the_post_thumbnail():
@@ -62,7 +63,13 @@ function the_theme_name()
 
 
 
-	register_nav_menu('menu', 'меню настраивается из функций темы');
+//    уже есть в nav-register-menu.php inc
+
+//    register_nav_menus( array(
+//        'primary' => __( 'Primary Menu', 'topshop' ),
+//        'top-bar' => __( 'Top Bar Menu', 'topshop' )
+//    ) );
+
 }
 
 add_action('after_setup_theme', 'the_theme_name');
