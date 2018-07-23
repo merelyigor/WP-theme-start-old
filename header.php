@@ -48,7 +48,14 @@
 
 <header class="header">
     <div class="container">
-        <a class="logo" href="<?php echo get_home_url(); ?>">
+
+        <a class="logo" <?php
+        if (is_front_page()){
+            echo 'style="cursor: default"';
+        }else{
+            echo 'href="/"';
+        }
+        ?>>
             <svg>
                 <use xlink:href="<?php echo get_template_directory_uri()?>/img/sprite-inline.svg#logo"></use>
             </svg>
