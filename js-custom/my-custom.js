@@ -19,3 +19,53 @@ $('.class form').submit(function(event){ //отслеживается перва
         $.fancybox.close(); // закрываю pop-up2 если форма находится в pop-up
     });
 });
+
+
+button.click(function(e){
+    var dataset = $(e.target).data();
+    console.log(dataset);
+    magnificPopupInstance.open({
+        type: 'inline',
+        items: dataset,
+        inline: {
+            markup: `
+        <div class="white-popup">
+          <div class="mfp-close"></div>
+          <h2>${dataset.username}</h2>
+          <input type="text" placeholder="${dataset.value}"/>
+          <input type="hidden" value="${dataset.value}"/>
+        </div>
+      `
+        }
+    });
+});
+
+
+
+//* Добавление класса при скролле *//
+
+jQuery(window).scroll(function() {
+    var the_top = jQuery(document).scrollTop(); // привязываем отсчет от верха документа
+    // говорим на сколько пиксилей нужно проскролить вниз что бы добавить класс (скрол от верха > если больше значения то присвоить класс)
+    if (the_top > 1150) {
+        jQuery('.grid-animate-fix-1').addClass('engaged'); // находим jQuery('.класс') по классу или id элемент к которому через .addClass('класс') добавляем клас
+    }
+    else {
+        jQuery('.grid-animate-fix-1').removeClass('engaged'); // иначе если не проскроленно и условие не выполняется то убираем класс при скроле вверх
+    }
+});
+
+
+// Поздно отвечаю - но решение 100% рабочее - может кому пригодится
+
+Картинка в magnific popup через data
+<div class="zoom" data-src="/images/test.jpg"></div>
+
+$('.zoom').click(function(){
+    $.magnificPopup.open({
+        items: {
+            src: $(this).data('src')
+        },
+        type: 'image'
+    });
+});

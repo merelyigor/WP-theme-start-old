@@ -5,7 +5,7 @@
  */
 
 /************** ------- Подключаю myajax от wordpress к скриптам темы -- должно вывести в скриптах скрипт myajax ------- **************/
-add_action( 'wp_enqueue_scripts', 'myajax_data' ); //подключаю скрипты myajax к теме через свои скрипты - скрипты подключать только через  wp_enqueue_scripts
+add_action( 'wp_enqueue_scripts', 'myajax_data', 99 ); //подключаю скрипты myajax к теме через свои скрипты - скрипты подключать только через  wp_enqueue_scripts
 function myajax_data(){
 
 
