@@ -21,6 +21,36 @@ $('.class form').submit(function(event){ //отслеживается перва
 });
 
 
+
+// Подключить нужно только после vendor или jquery
+
+$('.contacts form').submit(function(event){
+    event.preventDefault();
+
+    var form = $(this),
+        data =  {
+            action: 'my_action', //название action который зарегистрирован для обработки данных в php
+            name: form.find('input[name="name"]').val(), //берутся значения по input и атрибуту name
+            mail: form.find('input[name="email"]').val(),
+            tel: form.find('input[name="tel"]').val(),
+            comment: form.find('textarea[name="comment"]').val()
+
+        };
+    console.table(data);
+    $.post( myajax.url, data, function(response) {
+        form.get(0).reset();
+    });
+});
+
+
+
+
+
+
+
+
+
+
 button.click(function(e){
     var dataset = $(e.target).data();
     console.log(dataset);
