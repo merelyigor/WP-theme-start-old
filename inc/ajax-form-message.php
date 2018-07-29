@@ -9,7 +9,7 @@ add_action( 'wp_enqueue_scripts', 'myajax_data', 99 ); //подключаю ск
 function myajax_data(){
 
 
-    wp_localize_script( 'main.js', 'myajax',  // подключаю myajax с скрипту с хендллером main.js
+    wp_localize_script( 'main.js', 'myajax_send_message_mail',  // подключаю myajax с скрипту с хендллером main.js
         array(
             'url' => admin_url('admin-ajax.php') //забираю данные js которые в js файле передаются в wp http:\/\/blufixx\/wp-admin\/admin-ajax.php
         )

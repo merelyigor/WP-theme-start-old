@@ -145,12 +145,12 @@ function create_custom_taxonomies(){
     );
 
     // Добавляем древовидную таксономию 'genre' (как категории)
-    register_taxonomy('genre', array('the_name_post_type'), array( // регистрируем таксономию genre для кастом-поста the_name_post_type
+    register_taxonomy('the_name_taxonomy', array('the_name_post_type'), array( // регистрируем таксономию genre для кастом-поста the_name_post_type
         'hierarchical' => true, // древовидное вложение - если его убрать то выводиться будут не рубриками а метками
         'labels' => $labels, // берется с name
         'show_ui' => true, // показать в админке
         'query_var' => true, // подключение параметра rewrite
-        'rewrite' => array( 'slug' => 'Жанр' ),
+        'rewrite' => array( 'slug' => 'the_name_post_type' ),
     ));
 }
 
