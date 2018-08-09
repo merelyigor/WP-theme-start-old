@@ -21,7 +21,7 @@ while ($the_query->have_posts()) : $the_query->the_post();
 
     //подключаем шаблон с контентом и тд поста
     get_template_part('template/post');
-    echo substr(strip_tags($post->post_content), 0, 250); // обрезка превью текста поста до 250 символов
+    echo mb_strcut(strip_tags($post->post_content), 0, 250); // обрезка превью текста поста до 250 символов
 
 endwhile;
 /************** ------- Вывод последних записей 5 шт ------- **************/
