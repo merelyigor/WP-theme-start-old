@@ -1,4 +1,4 @@
-<?php the_permalink(); // Ссылка на пост ?>
+
 
 <?php the_post_thumbnail($id, 'medium', $attr); // Выводит изображение поста в теге <img> --- large - medium - thumbnail ?>
 
