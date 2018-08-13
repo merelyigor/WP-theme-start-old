@@ -5,6 +5,38 @@
  **/
 get_header(); ?>
 
+
+
+
+<?php
+/************** ------- Получает обьек кастомной таксономии  ------- **************/
+$categories = get_terms($args = array(
+    'taxonomy' => 'custom_taxonomy', //Название таксономии с которой работать. Можно указать несколько названий в виде массива.
+    // С версии WP 4.5, до этого названия таксономий указывались в первом параметре самой функции.
+    'number' => 999, //Максимальное количество элементов, которые будут получены. Лимит
+    'hide_empty' => false, //Скрывать ли термины в которых нет записей. 1(true) - скрывать пустые, 0(false) - показывать пустые.
+)); // https://wp-kama.ru/function/get_terms
+
+                                                            // Пример использования вывод таксономии в виде карточки категории с произвольными полями
+echo '<div class="category-goods-col">
+    <div class="category-goods-item category-goods-big">
+        <div class="category-goods-img">
+            <img src="'.get_field('custom_field', $category).'" alt="' . sprintf( __( "изображение из  %s" ), $category->name ) . '">
+        </div>
+        <a href="' . get_category_link( $category->term_id ) . '" class="category-goods-link"></a>
+        <a href="' . get_category_link( $category->term_id ) . '" class="category-goods-name">' . $category->name.'</a>
+    </div>
+</div>';
+
+echo wp_get_post_terms(get_the_ID(), ['taxonomy'=>'custom_taxonomy'])[0]->name; // пример вывода названия текущей таксономии
+echo get_category_link( wp_get_post_terms(get_the_ID(), ['taxonomy'=>'custom_taxonomy'])[0]->term_id ); // пример вывода ссылки текущей таксономии
+
+?>
+
+
+
+
+
 <?php
 /************** ------- Выводит количество записей произвольного типа: ------- **************/
 $posts = get_posts('post_type=post_type&status=new');
