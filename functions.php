@@ -84,11 +84,30 @@ add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
 
 function special_nav_class ($classes, $item) {
     if (in_array('current-menu-item', $classes) ){
-        $classes[] = 'custom-active-class-to-menu-item ';
+        $classes[] = 'custom-active-class-to-menu-item '; //активный класс
     }
     return $classes;
 }
 
+## Чтобы также выделить элемент меню, когда активна одна из дочерних страниц, также проверьте другой класс ( current-page-ancestor), как показано ниже:
+add_filter('nav_menu_css_class' , 'special_nav_class_page' , 10 , 2);
+
+function special_nav_class_page ($classes, $item) { //так же для текущих стр. и дочерних стр.
+    if (in_array('current-page-ancestor', $classes) || in_array('current-menu-item', $classes)){
+        $classes[] = 'custom-active-class-to-menu-item-page '; //активный класс
+    }
+    return $classes;
+}
+
+## В дополнение к предыдущим ответам, если ваши пункты меню являются категориями и вы хотите выделить их при навигации по сообщениям, проверьте также current-post-ancestor:
+add_filter('nav_menu_css_class' , 'special_nav_class_category' , 10 , 2);
+
+function special_nav_class_category ($classes, $item) {
+    if (in_array('current-post-ancestor', $classes) || in_array('current-page-ancestor', $classes) || in_array('current-menu-item', $classes) ){
+        $classes[] = 'custom-active-class-to-menu-category-item ';
+    }
+    return $classes;
+}
 
 
 /**
