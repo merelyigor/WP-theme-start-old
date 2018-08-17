@@ -147,6 +147,21 @@ function PBP_increase_upload($bytes)
 }
 
 
+/**
+ * функция регистрации и вывода shortcod шордкодов в админке - для использования  [custom]
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
+function custom_shortcode( $atts ){
+    $html = '';
+    while ( have_rows('docs') ) { the_row(); // можно вывести кастомное поле которое добавляется к странице ACFом для вывода повторителя с файлом и тд.
+        $html .= '<a href="'.get_sub_field( "file" ).'">';
+        $html .= '<img src="'.get_bloginfo( "template_url" ).'/img/sprite-inline"></img>';
+        $html .= '<p>'. get_sub_field( "text" ).'</p>';
+    }
+    return $html;
+}
+
+add_shortcode( 'custom', 'custom_shortcode' );
 
 
 

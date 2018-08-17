@@ -41,8 +41,12 @@ function true_register_post_type_init() {
 		'menu_icon' => get_stylesheet_directory_uri() .'/img/custom_post_icon.png', // путь к иконке для админки
 		'menu_position' => 20, // порядок в меню админки
         'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'revisions'),
-        'taxonomies' => array( 'category') // указывает что у данного типа поста будут рубрики
-	);
+        'taxonomies' => array( 'category'), // указывает что у данного типа поста будут рубрики
+        'show_in_admin_bar' => true, //Сделать этот тип доступным из админ бара.
+        'show_in_nav_menus' => true, //Включить возможность выбирать этот тип записи в меню навигации.
+        'exclude_from_search' => false //Исключить ли этот тип записей из поиска по сайту. 1 (true) - да, 0 (false) - нет.
+
+    );
 
 	register_post_type('the_name_post_type', $args); //регистрация названия типа постов для кастомного поста
     flush_rewrite_rules(); // перезагрузка урлов для правильного построения ЧПУ wp после регистрации типа поста
