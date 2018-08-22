@@ -199,7 +199,8 @@ function custom_pagenavi( $before = '', $after = '', $echo = true, $args = array
     if ( $end_page < $max_page ) {
         if( $dotright_text && $end_page != ($max_page-1) )
             $out.= '<span class="extend">'. $dotright_text2 .'</span> ';
-        $out.= '<a class="last" href="'. str_replace( '___', $max_page, $link_base ) .'">'. ( $last_page_text ? $last_page_text : $max_page ) .'</a> ';
+    if ($dotright_text && $end_page != ($max_page-1))
+    $out.= '<a class="last" href="'. str_replace( '___', $max_page, $link_base ) .'">'. ( $last_page_text ? $last_page_text : $max_page ) .'</a> ';
     }
     // вперед
     if ( $next_text && $paged != $end_page )
