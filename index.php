@@ -173,7 +173,7 @@ if ($categories): // условие если мы на странице пост
     foreach ($categories as $individual_category) $category_ids[] = $individual_category->term_id;
     $args = array(
         'category__in' => $category_ids, // Сортировка производится по категориям
-        'orderby' => rand, // Условие сортировки рандом
+        'orderby' => 'rand', // Условие сортировки рандом
         'post__not_in' => array($post->ID), // Передаем id категории поста на котором мы находимся
         'showposts' => 15, // Количество выводимых записей
         'caller_get_posts' => 1 // Запрещаем повторение ссылок
