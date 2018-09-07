@@ -28,7 +28,11 @@ function the_theme_name()
 
 
 	/************** ------- медиа (картинки) в постах и их размер - уже есть в post-settings.php inc ------- **************/
-//	add_theme_support('post-thumbnails');
+    add_theme_support( 'post-thumbnails' ); //регистрирую настройки картинок в контенте
+    if ( function_exists( 'add_theme_support' ) ) {
+        add_theme_support( 'post-thumbnails' );
+        set_post_thumbnail_size( 150, 150 );
+    }
 //	set_post_thumbnail_size(450, 450);
 //    add_image_size( 'name-theme', 450, 450, true );
 	//Позволяет устанавливать миниатюру посту
@@ -49,7 +53,7 @@ function the_theme_name()
 
 
 
-	/************** ------- поддержка html5 форм ------- **************/
+	/************** ------- поддержка форматов постов ------- **************/
 	add_theme_support('post-formats', array(
 		'aside',
 		'image',
