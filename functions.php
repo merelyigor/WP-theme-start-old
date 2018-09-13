@@ -165,4 +165,13 @@ add_shortcode( 'custom', 'custom_shortcode' );
 
 
 
+/**
+ * функция Добавляет <a rel="nofollow" атрибут к выводу ссылок стандартной галереей из шордкодов [gallery size="medium" ids="2368,2370,2371"]
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
+function filter_function_name_replase_media_link( $markup, $id, $size, $permalink, $icon, $text ){
+    $content = preg_replace("/<a/","<a rel=\"nofollow\"", $markup, 1);
+    return $content;
+}
+add_filter( 'wp_get_attachment_link', 'filter_function_name_3152', 10, 6 );
 
