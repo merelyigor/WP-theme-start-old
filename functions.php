@@ -32,7 +32,8 @@ include_once 'inc/wp-admin-ccs.php'; // Добавление собственн�
 include_once 'inc/wp-navigations-inc.php'; // Настройка пагинации 1 2 3 4 ...
 include_once 'inc/wp_json-oembed-fix_off.php'; // фикс wp_json и oembed из индексации - выключение REST API
 include_once 'inc/wpml-plugin-custm.php'; // WPML настройки кнопок переключения языков
-include_once 'inc/custom-registration.php'; // Кастомная форма регистрации
+include_once 'inc/custom-registration-form.php'; // Кастомная форма регистрации
+include_once 'inc/taxonomy_custom_field.php'; // Кастомная форма регистрации
 
 
 

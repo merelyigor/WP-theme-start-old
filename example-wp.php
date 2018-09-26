@@ -191,6 +191,25 @@ if( current_user_can('subscriber') ) { // если юзер подпищик - �
     <?php endwhile;
 endif;?>
 
+
+<?php  /************** ------- вывод в цикле повторителя в повторителе из массива - не acf ------- **************/?>
+<?php foreach( CFS()->get('block_5_loop') as $slide): ; // выводим в цикле первый повторитель с его саб полями?>
+    <div class="swiper-slide">
+        <?php foreach($slide['txtarea_item_loop'] as $service): ?>
+            <div class="thumb-service">
+                <i class="ic-ser-arrow">
+                    <svg>
+                        <use xlink:href="<?= get_template_directory_uri() ?>/img/sprite-inline.svg#ic-service-arrow"></use>
+                    </svg>
+                </i>
+                <h3><?= $service['_item_services'] ?></h3>
+                <p><?= $service['_txtarea_item_services'] ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
+
+
 <?php  /************** ------- вывод в цикле повторителя с (группы) ------- **************/?>
 <?php foreach (get_field('group')['txt_block_left'] as $key => $value): ?>
     <?= $value['txt'] ?>
