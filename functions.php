@@ -33,7 +33,7 @@ include_once 'inc/wp-navigations-inc.php'; // Настройка пагинац�
 include_once 'inc/wp_json-oembed-fix_off.php'; // фикс wp_json и oembed из индексации - выключение REST API
 include_once 'inc/wpml-plugin-custm.php'; // WPML настройки кнопок переключения языков
 include_once 'inc/custom-registration-form.php'; // Кастомная форма регистрации
-include_once 'inc/taxonomy_custom_field.php'; // Кастомная форма регистрации
+include_once 'inc/taxonomy_custom_field.php'; // Кастомная форма регистрации таксономий
 
 
 
@@ -151,18 +151,27 @@ function PBP_increase_upload($bytes)
 /**
  * функция регистрации и вывода shortcod шордкодов в админке - для использования  [custom]
  * ---------------------------------------------------------------------------------------------------------------------
+ * для использования [custom-shortcod] что бы передать значение для переменной $var нужно указать [custom-shortcod var=some_string] $var будет присвоено some_string
  */
 function custom_shortcode( $atts ){
+
+
+    $var = ''; //инициализация переменной $var для использования в shortcod
+    extract( shortcode_atts( array( // достаю из shortcod значение для переменной $var
+        'var' => '' // присвоение переменной some_string из коментария выше
+    ), $atts ) );
+    $var; // будет иметь some_string в этом месте для дальнейшего вызова и передачи
+
     $html = '';
     while ( have_rows('docs') ) { the_row(); // можно вывести кастомное поле которое добавляется к странице ACFом для вывода повторителя с файлом и тд.
         $html .= '<a href="'.get_sub_field( "file" ).'">';
         $html .= '<img src="'.get_bloginfo( "template_url" ).'/img/sprite-inline"></img>';
         $html .= '<p>'. get_sub_field( "text" ).'</p>';
     }
-    return $html;
+    return $html; // вернуть html на страницу вместо указанного shortcod
 }
 
-add_shortcode( 'custom', 'custom_shortcode' );
+add_shortcode( 'custom-shortcod', 'custom_shortcode' );
 
 
 

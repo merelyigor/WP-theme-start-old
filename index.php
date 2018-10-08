@@ -395,3 +395,198 @@ echo wp_list_categories($args); ?>
  *******/
 
 /************** ------- вывод Рубрик на страницу шаблона ------- **************/ ?>
+
+
+
+
+<?php
+/************** ------- Подгрузка постов с WP_Query ------- **************/
+
+/***************************************************************************************************************************************
+ * Данный код проверяет, сколько у нас страниц содержит блог наш, если больше одной, выводит кнопку, меньше, не выводит.
+
+ajaxurl – Это обработчик AJAX-запросов в WordPress.
+
+true_posts – Сериализованный массив, содержащий все необходимые параметры запроса, является свойством класса WP_Query.
+
+current_page – Номер текущей страницы.
+ ****************************************************************************************************************************************/
+
+if ( $wp_query->max_num_pages > 1 ) : ?>
+    <script>
+        var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';
+        var true_posts = '<?php echo serialize($wp_query->query_vars); ?>';
+        var current_page = <?php echo (get_query_var('paged')) ? get_query_var('paged') : 1; ?>;
+        var max_pages = '<?php echo $wp_query->max_num_pages; ?>';
+    </script>
+    <div class="sphere-center">
+        <button class="btn btn_transparent" id="true_loadmore">Загрузить еще новости</button>
+    </div>
+<?php endif;
+wp_reset_query(); ?>
+
+<?php
+/************** ------- добавить скрипт в funcions.php для передачи постов в js и получения аргументов для выдачи следующих постов ------- **************/
+
+function true_load_posts(){
+    global $post;
+    $args = unserialize(stripslashes($_POST['query']));
+    $args['paged'] = $_POST['page'] + 1; // следующая страница
+    $args['post_status'] = 'publish';
+    $q = new WP_Query($args);
+    if( $q->have_posts() ):
+        while($q->have_posts()): $q->the_post();
+            $cat = get_the_category();  ?>
+            <div class="newslist-item">
+                <div class="newslist-item__left"><div class="newslist-item__tag newslist-item__tag_<?=  get_field('color', $cat[0]) ?>"> <?= wp_get_post_terms(get_the_ID(), ['taxonomy'=>'category'])[0]->name?>
+                        <span class="newslist-item__date">
+                                            <?php the_time(' j F Y года '); ?></span> </div><a href="<?php the_permalink(); ?>">
+                        <h2><?php the_title(); ?></h2></a></div>
+                <div class="newslist-item__right">
+                    <div class="newslist-item__excerpt"><?php echo mb_strcut(strip_tags($post->post_content), 0, 250); ?>
+                    </div><a class="newslist-item__more" href="<?php the_permalink(); ?>">Читать подробнее</a>
+                </div>
+            </div>
+        <?php
+        endwhile;
+    endif;
+    wp_reset_postdata();
+    wp_die();
+}
+
+
+add_action('wp_ajax_loadmore', 'true_load_posts');
+add_action('wp_ajax_nopriv_loadmore', 'true_load_posts'); ?>
+
+<?php /************** ------- js скрипт который возвращает ответ в виде верстки из цыкла WP_Query функции true_load_posts() - только после jquery ------- **************/ ?>
+<script>
+    jQuery(function($){
+        $('#true_loadmore').click(function(){
+            $(this).text('Загружаю...'); // изменяем текст кнопки, вы также можете добавить прелоадер
+            var data = {
+                'action': 'loadmore',
+                'query': true_posts,
+                'page' : current_page
+            };
+            $.ajax({
+                url:ajaxurl, // обработчик
+                data:data, // данные
+                type:'POST', // тип запроса
+                success:function(data){
+                    if( data ) {
+                        $('.sphere-center').before(data);
+                        $('#true_loadmore').text('Загрузить еще новости'); // вставляем новые посты
+                        current_page++; // увеличиваем номер страницы на единицу
+                        if (current_page == max_pages) $("#true_loadmore").remove(); // если последняя страница, удаляем кнопку
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+<?php
+/************** ------- Подгрузка данных из поля get_field('add_video_block',2); после девятого элемента масива ------- **************/
+
+function load_video_callback() {
+    $last = $_REQUEST['last'];
+    $videos = get_field('add_video_block',2);
+    $result = [];
+    for($temp = $last; $last < $temp + 9; $last++){
+        if(!isset($videos[$last])){
+            $last--;
+            break;
+        }
+        $result[] = $videos[$last];
+    }
+    return wp_send_json_success(['videos' => $result, 'last' => $last]);
+
+}
+add_action( 'wp_ajax_load_video', 'load_video_callback' );
+add_action('wp_ajax_nopriv_load_video', 'load_video_callback');
+
+
+
+function load_product_callback() {
+    $last = $_REQUEST['last'];
+    $products = get_field('add_product',2);
+
+    $result = [];
+    for($temp = $last; $last < $temp + 9; $last++){
+        if(!isset($products[$last])){
+            $last--;
+            break;
+        }
+        $result[] = $products[$last];
+    }
+    return wp_send_json_success(['products' => $result, 'last' => $last]);
+
+}
+add_action( 'wp_ajax_load_product', 'load_product_callback' );
+add_action('wp_ajax_nopriv_load_product', 'load_product_callback'); ?>
+
+<?php /************** ------- js скрипт который возвращает ответ в виде верстки из функции renderProduct() - только после jquery ------- **************/ ?>
+<script>
+    var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php'; //если в футере
+    /************** ------- или как ниже в function.php ------- **************/
+
+    add_action( 'wp_enqueue_scripts', 'myajax_data', 99 ); //подключаю скрипты myajax к теме через свои скрипты - скрипты подключать только через  wp_enqueue_scripts
+    function myajax_data(){
+
+
+        wp_localize_script( 'vendor', 'myajax',  // подключаю myajax с скрипту с хендллером main.js
+            array(
+                'url' => admin_url('admin-ajax.php') //забираю данные js которые в js файле передаются в wp http:\/\/blufixx\/wp-admin\/admin-ajax.php
+    ))}
+
+
+
+    jQuery(function($){
+        $('#load_more').click(function(){
+            $(this).text('Загружаю...'); // изменяем текст кнопки, вы также можете добавить прелоадер
+
+            var wp_data = {
+                action: 'load_product',
+                last: 9
+            };
+            $.ajax({
+                url: myajax.url,
+                data: wp_data,
+                method: 'POST',
+                success: function(response){
+                    response.data.products.map(renderProduct);
+                    wp_data.last = response.data.last;
+                }
+            })
+
+        });
+    });
+
+
+    function renderProduct(product){
+        var html = "<div class=\"col-md-4 col-sm-6 col-xs-12\">\n" +
+            "                    <div class=\"thumb-goods\">\n" +
+            "                        <div class=\"thumb-goods__image\">\n" +
+            "                            <img src=\""+ product.img+"\" alt=\""+ product.title+"\">\n" +
+            "                        </div>\n" +
+            "                        <div class=\"thumb-goods__description\">\n" +
+            "                            <div class=\"thumb-goods__description-title\">"+ product.title+"</div>\n" +
+            "                            <p>"+ product.txt+"</p>\n" +
+            "                            <div class=\"result\">\n" +
+            "                                <span>$"+ product.price+"</span>\n" +
+            "                                <a class=\"btn btn-buy\" href=\""+ product.amazon_url+"\">\n" +
+            "                                    <img src=\"<?= get_template_directory_uri(); ?>/img/pages/elems/amazon_button.png\" alt=\"amazon\">\n" +
+            "                                </a>\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                </div>";
+        $('.goods .lg-container .row-flex').append(html);
+    }
+</script>
+
+

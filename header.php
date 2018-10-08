@@ -65,3 +65,5 @@
         </ul>
     </div>
 </header>
+
+<?php get_template_part( 'inc/nav-single' ); ?>

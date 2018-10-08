@@ -99,7 +99,7 @@ function save_custom_taxonomy_meta( $term_id ) {
  *
  * Получить эти метаполя затем можно в шаблоне или где-либо еще с помощью функции get_term_meta(). Например ID термина 10, тогда:
  *
- * $title = get_term_meta( 10, 'title', 1 );
- * $meta_description = get_term_meta( 10, 'meta_description', 1 );
+ * get_term_meta( 10, 'title', 1 );
+ * esc_attr( get_term_meta( get_queried_object()->term_id, 'txt_down_product_cat', 1 ) ); ----- gj ntreotve
  *
  */

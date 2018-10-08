@@ -6,10 +6,12 @@
  */
 
 
-register_nav_menus(array(
-    'top'    => 'Верхнее меню',    //Название месторасположения меню в шаблоне - theme_location
-    'bottom' => 'Нижнее меню'      //Название другого месторасположения меню в шаблоне - theme_location
-));
+add_action('after_setup_theme', function(){
+    register_nav_menus(array(
+        'top'    => 'top menu location',    //Название месторасположения меню в шаблоне - theme_location
+        'bottom' => 'bottom menu location'      //Название другого месторасположения меню в шаблоне - theme_location
+    ) );
+});
 
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args');
 function my_wp_nav_menu_args($args = '')
