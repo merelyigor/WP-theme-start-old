@@ -257,10 +257,4 @@ endif; ?>
         </div>
 </div>
 
-<script>
-
-
-
-</script>
-
 
