@@ -28,6 +28,11 @@ function myajax_data(){
 add_action('wp_ajax_my_form_name_action', 'my_form_name_action_callback'); //регистрирую свой экшн на отправку данных с формы на адресс - название my_form_name_action
 add_action('wp_ajax_nopriv_my_form_name_action', 'my_form_name_action_callback');
 function my_form_name_action_callback() { //регистрирую функцию my_form_name_action_callback
+    
+    if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+        wp_die('Это не ajax запрос!');     
+    }
+    
     $name = $_POST['name']; //дальше забираю данные из JS которые тянуться по классу или id из верстки --- пример js отдельным файлом /dist/my-js/ajax-form-action.js тег input[name="name"]
     $org = $_POST['org']; // забираю тег input[name="organization"]
     $region = $_POST['region']; // забираю тег input[name="region"]
