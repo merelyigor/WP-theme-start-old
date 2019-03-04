@@ -34,6 +34,7 @@ include_once 'inc/wp_json-oembed-fix_off.php'; // фикс wp_json и oembed и�
 include_once 'inc/wpml-plugin-custm.php'; // WPML настройки кнопок переключения языков
 include_once 'inc/custom-registration-form.php'; // Кастомная форма регистрации
 include_once 'inc/taxonomy_custom_field.php'; // Кастомная форма регистрации таксономий
+include_once 'inc/taxonomy-radio-button.php'; // радио-кнопки в блоке выбора рубрик
 
 
 
