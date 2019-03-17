@@ -1,26 +1,37 @@
 <?php
 /**
- * Присвоение кастомных класов для тега body
+ * Assigning custom classes for the body tag
  * ---------------------------------------------------------------------------------------------------------------------
  */
-function custom_body_class($wp_classes)
-{
-    if (is_front_page()) { //проверяет главная ли это страница если да то присваевает body клас "index"
-        $wp_classes[] = 'index';
+
+add_filter('body_class', function ($wp_classes) {
+    if (is_front_page()) {
+        $wp_classes[] = 'is-front-page';
     }
 
-    if (is_page(10)) { //проверка на наличие страницы с id-10 если это страница с id-10 то присваевает body клас "page-id10"
-        $wp_classes[] = 'page-id10';
+    if (is_page(10)) {
+        $wp_classes[] = 'is-page-id-10';
     }
+
+    if (is_single()) {
+        $wp_classes[] = 'page-news';
+    }
+
+    $assoc = [
+        'page-template-name' => 'prints class by pattern name in class',
+    ];
+
+    array_walk($wp_classes, function ($item) use ($assoc, &$wp_classes) {
+        if (array_key_exists($item, $assoc))
+            $wp_classes[] = $assoc[$item];
+    });
 
     return $wp_classes;
-}
-
-add_filter('body_class', 'custom_body_class');
+});
 
 
 /**
- * Для вывода указать в теге body <?= body_class (); ?>
+ * For output, specify in the tag body <?= body_class (); ?>
  * ---------------------------------------------------------------------------------------------------------------------
  */
 

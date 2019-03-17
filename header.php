@@ -4,7 +4,7 @@
  */
 
 ?><!DOCTYPE html>
-<html <?php echo ICL_LANGUAGE_CODE ?> class="no-js">
+<html  class="no-js">
 <head>
     <title><?php bloginfo('name'); ?> |
         <?php is_home() ? bloginfo('description') : wp_title(''); ?>

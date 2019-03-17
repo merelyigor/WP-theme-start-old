@@ -1,4 +1,6 @@
-// post_create_form -- reviews
+
+
+
 $('#modal-reviews form').submit(function (event) {
     event.preventDefault();
     let form = $(this),
@@ -11,7 +13,7 @@ $('#modal-reviews form').submit(function (event) {
 
 
     $.ajax({
-        url: admin_ajax.url,
+        url: my_ajax.url,
         dataType: 'text',
         cache: false,
         contentType: false,
@@ -19,7 +21,7 @@ $('#modal-reviews form').submit(function (event) {
         data: form_data,
         type: 'POST',
         success: function (response) {
-        console.log('success', response);
+            console.log('success', response);
             //form.get(0).reset();
             //let $popup = document.querySelector('#modal-getRequest');
             //$.fancybox.open($popup);

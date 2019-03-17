@@ -1,24 +1,26 @@
 <?php
 
-function search_results_exclude($query) {
+
+add_filter('pre_get_posts', function ($query) {
     if ($query->is_search) {
-        $query->set('post_type', 'post'); // исключить все страницы (не посты)
+        $query->set('post_type', 'post-type'); //тип поста который исключается из поиска
 //        $query->set('cat','4298,1015'); // исключить рубрики по ID
 //        $query->set('post__not_in', array( 350, 13, 218 )); // исключить посты или страницы по ID
     }
     return $query;
-}
-add_filter('pre_get_posts','search_results_exclude');
+});
 
 
 /************** ------- включает кастомные посты в результаты поиска ------- **************/
-function search_add($query) {
+function search_add($query)
+{
     if ($query->is_search) {
-        $query->set('post_type', array('post', 'type_post') ); // в поиске можно искать стандартным постам 'post' и так же постам с типом 'movie'
+        $query->set('post_type', array('post', 'type_post')); // в поиске можно искать стандартным постам 'post' и так же постам с типом 'movie'
     }
     return $query;
 }
-add_filter('pre_get_posts','search_add');
+
+add_filter('pre_get_posts', 'search_add');
 
 
 /************** ------- выводить в поиске только посты принадлежащие к данным рубрикам или категориям ------- **************/
@@ -30,7 +32,6 @@ add_filter('pre_get_posts','search_add');
 //    return $query;
 //}
 //add_filter('pre_get_posts','searchcategory');
-
 
 
 /************** ------- Изменение количества выводимых постов на странице результата поиска ------- **************/
@@ -52,17 +53,16 @@ add_filter('pre_get_posts','search_add');
 //}
 
 
-
-
 /************** ------- настройка вывода количевства найденых постов --- вывод <?= search_results_title(); ?> ------- **************/
-function search_results_title() {
-    if( is_search() ) {
+function search_results_title()
+{
+    if (is_search()) {
 
-        if( is_search() ) {
+        if (is_search()) {
 
             global $wp_query;
 
-            if( $wp_query->post_count == 1 ) {
+            if ($wp_query->post_count == 1) {
                 $result_title .= 'найдено всего 1 результат';
             } else {
                 $result_title .= $wp_query->found_posts . ' | найденых результатов';
@@ -79,77 +79,78 @@ function search_results_title() {
 }
 
 
-
-
-
 /**
  * Modify the search query with posts_where ACF filds
  *
  * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
  */
-function cf_search_where( $where ) {
+function cf_search_where($where)
+{
     global $pagenow, $wpdb;
 
-    if ( is_search() ) {
+    if (is_search()) {
         $where = preg_replace(
-            "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-            "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+            "/\(\s*" . $wpdb->posts . ".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+            "(" . $wpdb->posts . ".post_title LIKE $1) OR (" . $wpdb->postmeta . ".meta_value LIKE $1)", $where);
     }
 
     return $where;
 }
-add_filter( 'posts_where', 'cf_search_where' );
+
+add_filter('posts_where', 'cf_search_where');
 
 /**
  * Prevent duplicates
  *
  * http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
  */
-function cf_search_distinct( $where ) {
+function cf_search_distinct($where)
+{
     global $wpdb;
 
-    if ( is_search() ) {
+    if (is_search()) {
         return "DISTINCT";
     }
 
     return $where;
 }
-add_filter( 'posts_distinct', 'cf_search_distinct' );
+
+add_filter('posts_distinct', 'cf_search_distinct');
 
 
 
 
 
 /**  -------------------- Весь список свойств которые можно использовать вместо условного тега
-$query->is_404
-$query->is_admin
-$query->is_archive
-$query->is_attachment
-$query->is_author
-$query->is_category
-$query->is_comments_popup
-$query->is_comment_feed
-$query->is_date
-$query->is_day
-$query->is_feed
-$query->is_home
-$query->is_month
-$query->is_page
-$query->is_paged
-$query->is_posts_page
-$query->is_post_type_archive
-$query->is_preview
-$query->is_robots
-$query->is_search
-$query->is_single
-$query->is_singular
-$query->is_tag
-$query->is_tax
-$query->is_time
-$query->is_trackback
-$query->is_year
-
-// функции
-$query->is_front_page()
-$query->is_main_query()
+ * $query->is_404
+ * $query->is_admin
+ * $query->is_archive
+ * $query->is_attachment
+ * $query->is_author
+ * $query->is_category
+ * $query->is_comments_popup
+ * $query->is_comment_feed
+ * $query->is_date
+ * $query->is_day
+ * $query->is_feed
+ * $query->is_home
+ * $query->is_month
+ * $query->is_page
+ * $query->is_paged
+ * $query->is_posts_page
+ * $query->is_post_type_archive
+ * $query->is_preview
+ * $query->is_robots
+ * $query->is_search
+ * $query->is_single
+ * $query->is_singular
+ * $query->is_tag
+ * $query->is_tax
+ * $query->is_time
+ * $query->is_trackback
+ * $query->is_year
+ *
+ * // функции
+ * $query->is_front_page()
+ * $query->is_main_query()
  **/
