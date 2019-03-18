@@ -24,7 +24,7 @@ include_once 'inc/custom-paginations.php'; // Кастомная пагинац�
 include_once 'inc/password-post.php'; // Запароленные записи
 include_once 'inc/post-hide.php'; // Скрытие постов учасников от других учасников которые не являются их авторами
 include_once 'inc/rus-translit.php'; // Перевод урлов в транслит с русс названий
-include_once 'inc/search-results-exclude.php'; // Поиск - исключение страниц и настройка
+include_once 'inc/search-results.php'; // Поиск - исключение страниц и настройка
 include_once 'inc/sidebar-wiget.php'; // Сайт бар темы - для виджетов
 include_once 'inc/style-theme.php'; // Подключение стилей
 include_once 'inc/validator.php'; // Валидатор для проверки форм на email, phone, file --- использует отправку AJAX форм
@@ -33,7 +33,7 @@ include_once 'inc/wp-navigations-inc.php'; // Настройка пагинац�
 include_once 'inc/wp_json-oembed-fix_off.php'; // фикс wp_json и oembed из индексации - выключение REST API
 include_once 'inc/wpml-plugin-custm.php'; // WPML настройки кнопок переключения языков
 include_once 'inc/custom-registration-form-TO-DOO.php'; // Кастомная форма регистрации
-include_once 'inc/taxonomy_custom_field.php'; // Кастомная форма регистрации таксономий
+include_once 'inc/taxonomy-custom-field.php'; // Кастомная форма регистрации таксономий
 include_once 'inc/taxonomy-radio-button.php'; // радио-кнопки в блоке выбора рубрик
 
 

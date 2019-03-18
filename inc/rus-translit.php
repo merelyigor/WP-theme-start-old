@@ -1,11 +1,12 @@
 <?php
 /**
- * перевод ярлыков с кирилицы на латиницу транслитом - для урлов так же экспорт файли тоже переводит (медиа или записи)
+ * translating slug from Cyrillic to Latin using translit - for urls, exporting files also translates (media or recordings)
  * ---------------------------------------------------------------------------------------------------------------------
  */
 function ctl_sanitize_title($title)
 {
 	global $wpdb;
+
 	$iso9_table = array(
 		'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G', 'Ѓ' => 'G',
 		'Ґ' => 'G', 'Д' => 'D', 'Е' => 'E', 'Ё' => 'YO', 'Є' => 'YE',

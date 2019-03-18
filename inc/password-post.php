@@ -39,18 +39,3 @@ add_filter('the_excerpt', function ($excerpt) {
     return $excerpt;
 });
 
-
-/************** ------- Minor modification for SQL query receiving posts to hide posts described below. ------- **************/
-
-
-/************** ------- При помощи этого фильтра определим, на каких именно страницах будет скрывать защищенные посты ------- **************/
-
-
-add_action('pre_get_posts', function ($query) {
-    if (is_front_page()) { // например на главной странице
-        add_filter('posts_where', function ($where) {
-            global $wpdb;
-            return $where .= " AND {$wpdb->posts}.post_password = '' ";
-        });
-    }
-});

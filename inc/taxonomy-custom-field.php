@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Дополнительные поля для кастомной таксономии product_category - так же работает для стандартной $taxname = 'category';
+ * Additional fields for custom taxonomy 'custom_taxonomy' - also works for standard 'category';
  * ---------------------------------------------------------------------------------------------------------------------
  */
 
-$taxname = 'product_category';
+$taxname = 'category';
 
-// Поля при добавлении элемента таксономии
+// Fields when adding taxonomy element
 add_action("{$taxname}_add_form_fields", 'add_new_custom_fields');
-// Поля при редактировании элемента таксономии
+// Fields when editing the taxonomy element
 add_action("{$taxname}_edit_form_fields", 'edit_new_custom_fields');
 
-// Сохранение при добавлении элемента таксономии
+// Preservation when adding taxonomy element
 add_action("create_{$taxname}", 'save_custom_taxonomy_meta');
-// Сохранение при редактировании элемента таксономии
+// Preservation when editing taxonomy element
 add_action("edited_{$taxname}", 'save_custom_taxonomy_meta');
 
 function edit_new_custom_fields( $term ) {
@@ -97,9 +97,9 @@ function save_custom_taxonomy_meta( $term_id ) {
 
 /**
  *
- * Получить эти метаполя затем можно в шаблоне или где-либо еще с помощью функции get_term_meta(). Например ID термина 10, тогда:
+ * You can get these metafields in a template or anywhere else using the function get_term_meta(). for Example ID term 10, then:
  *
  * get_term_meta( 10, 'title', 1 );
- * esc_attr( get_term_meta( get_queried_object()->term_id, 'txt_down_product_cat', 1 ) ); ----- gj ntreotve
+ * esc_attr( get_term_meta( get_queried_object()->term_id, 'txt_down_product_cat', 1 ) ); ----- Current
  *
  */
