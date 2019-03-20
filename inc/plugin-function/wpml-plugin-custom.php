@@ -1,8 +1,8 @@
 <?php
 /**
- * WPML кастомная кнопка переключения языков
- *  вывод статуса языка на странице для html ---- <html <?php echo ICL_LANGUAGE_CODE ?> class="no-js no-svg">
- * вывод кастомной кнопки переключения языка ---- <?php my_language_switcher() ?>
+ * WPML custom language switch button
+ * display the status of the language on the page for html ---- <html <?php echo ICL_LANGUAGE_CODE ?> class="no-js no-svg">
+ * displaying a custom language switch button ---- <?php my_language_switcher() ?>
  * ---------------------------------------------------------------------------------------------------------------------
  */
 function my_language_switcher()
