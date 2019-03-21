@@ -1,11 +1,18 @@
 <?php
 
-/************** ------- Excludes from search by post type and other parameters transmitted in WP_Query{$query}. ------- **************/
+## adds to the output in the search only the current specified posts excluding the rest
 add_filter('pre_get_posts', function ($query) {
     if ($query->is_search) {
-        $query->set('post_type', 'post-type'); //post type that is excluded from the search
-//        $query->set('cat','4298,1015'); // exclude rubrics by ID
-//        $query->set('post__not_in', array( 350, 13, 218 )); //exclude posts or pages by id
+       $query->set('post_type', array(
+            'post',
+            'sermon-post',
+            'epistle-post',
+            'gallery-video-post',
+            'document-post',
+            'episcopate-post',
+        ));
+//        $query->set('cat','4298,1015');
+//        $query->set('post__not_in', array( 350, 13, 218 ));
     }
     return $query;
 });
