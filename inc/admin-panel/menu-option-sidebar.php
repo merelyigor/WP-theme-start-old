@@ -1,7 +1,7 @@
 <?php
 
 
-// Add a menu option to the WordPress Admin sidebar for loading email database
+// Add a menu option to the WordPress Admin sidebar for loading email database CSV FILE CREATED
 
 add_action('admin_menu', function () {
     add_menu_page('Експорт файлу CSV з базою емейлів', 'Експорт емейлів', 'manage_options', 'csv-file-export', 'csvFile', '', 4);
