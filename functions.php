@@ -49,6 +49,9 @@ include_once 'inc/always-included/сyrillic-translit.php';
 include_once 'inc/always-included/normal-date.php';
 include_once 'inc/always-included/translate-google.php';
 
+## admin panel
+inc/admin-panel/menu-option-sidebar.php
+
 /**
  * File extension function
  * ---------------------------------------------------------------------------------------------------------------------
