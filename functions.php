@@ -75,6 +75,24 @@ function PBP_increase_upload($bytes)
     return 90048576; // 1 megabyte
 }
 
+/**
+ * Cuts a string to a certain number of characters without breaking words.
+ * Supports multibyte encodings.
+ * @param string $str String
+ * @param int $length length, how many characters to trim
+ * @param string $postfix postfix that is added to the string
+ * @param string $encoding default encoding 'UTF-8'
+ * @return string cropped string
+ */
+function mbCutString($str, $length, $postfix='...', $encoding='UTF-8')
+{
+    if (mb_strlen($str, $encoding) <= $length) {
+        return $str;
+    }
+
+    $tmp = mb_substr($str, 0, $length, $encoding);
+    return mb_substr($tmp, 0, mb_strripos($tmp, ' ', 0, $encoding), $encoding) . $postfix;
+}
 
 /**
  * function adds <a rel="nofollow" attribute to display links by standard gallery from shortcod
