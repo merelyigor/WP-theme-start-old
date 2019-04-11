@@ -35,6 +35,7 @@ function mbCutString($str, $length, $postfix='...', $encoding='UTF-8')
  * @param string $pre_slug http://www.domain.com/$pre_slug/post-slug
  * @param string $post_type type of post which will have url added
  * use rewrite_rule_pre_url('news', 'post'); http://www.domain.com/news/post-slug-post-type-post
+ * for custom posts use register_post_type('custom-post', 'rewrite' => array('slug' => '/slug'));
  * only works for uncategorized posts
  */
 function rewrite_rule_pre_url($pre_slug = 'pre-slug', $post_type = 'post')
