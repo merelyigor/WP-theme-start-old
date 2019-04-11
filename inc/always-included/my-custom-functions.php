@@ -1,5 +1,35 @@
 <?php
 
+## new var_dump function
+function dd($var_dump, $die = false)
+{
+    echo '<pre style="color: #850085">';
+    var_dump($var_dump);
+    echo '</pre>';
+    if ($die) {
+        wp_die();
+    }
+}
+
+/**
+ * Cuts a string to a certain number of characters without breaking words.
+ * Supports multibyte encodings.
+ * @param string $str String
+ * @param int $length length, how many characters to trim
+ * @param string $postfix postfix that is added to the string
+ * @param string $encoding default encoding 'UTF-8'
+ * @return string cropped string
+ */
+function mbCutString($str, $length, $postfix='...', $encoding='UTF-8')
+{
+    if (mb_strlen($str, $encoding) <= $length) {
+        return $str;
+    }
+
+    $tmp = mb_substr($str, 0, $length, $encoding);
+    return mb_substr($tmp, 0, mb_strripos($tmp, ' ', 0, $encoding), $encoding) . $postfix;
+}
+
 /**
  * Overwriting URLs on single posts page.
  * @param string $pre_slug http://www.domain.com/$pre_slug/post-slug
@@ -31,4 +61,21 @@ function rewrite_rule_pre_url($pre_slug = 'pre-slug', $post_type = 'post')
         }
         return $link;
     });
+}
+
+/**
+ * function adds <a rel="nofollow" attribute to display links by standard gallery from shortcod
+ * [gallery size="medium" ids="2368,2370,2371"]
+ * ---------------------------------------------------------------------------------------------------------------------
+ */
+add_filter('wp_get_attachment_link', function ($markup, $id, $size, $permalink, $icon, $text) {
+    $content = preg_replace("/<a/", "<a rel=\"nofollow\"", $markup, 1);
+    return $content;
+}, 10, 6);
+
+## File Download Restriction - Set Size
+add_filter('upload_size_limit', 'PBP_increase_upload');
+function PBP_increase_upload($bytes)
+{
+    return 90048576; // 1 megabyte
 }
