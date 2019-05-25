@@ -4,7 +4,7 @@
  */
 
 ?><!DOCTYPE html>
-<html  class="no-js">
+<html <?php language_attributes(); ?> class="no-js no-svg">
 <head>
     <title><?php bloginfo('name'); ?> |
         <?php is_home() ? bloginfo('description') : wp_title(''); ?>
