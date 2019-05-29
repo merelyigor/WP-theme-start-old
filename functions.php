@@ -45,6 +45,7 @@ include_once 'inc/other-function/sidebar-widget.php';
 include_once 'inc/other-function/wp-json-embed-fix-off.php';
 
 ## always included
+include_once 'inc/always-included/my-custom-functions.php';
 include_once 'inc/always-included/сyrillic-translit.php';
 include_once 'inc/always-included/normal-date.php';
 include_once 'inc/always-included/translate-google.php';
