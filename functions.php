@@ -52,6 +52,7 @@ include_once 'inc/always-included/translate-google.php';
 
 ## admin panel
 include_once 'inc/admin-panel/menu-option-sidebar.php';
+include_once 'inc/admin-panel/acf-option-page.php';
 
 /**
  * File extension function
