@@ -1,26 +1,18 @@
 <?php
 /**
- * The template for displaying the header
+ * The header for our theme
  */
 
-?><!DOCTYPE html>
+
+
+?>
+<!doctype html>
 <html <?php language_attributes(); ?> class="no-js no-svg">
 <head>
     <title><?php bloginfo('name'); ?> |
         <?php is_home() ? bloginfo('description') : wp_title(''); ?>
     </title>
-    <title><?php
-        if(get_the_ID()!==2786 && $post_type !== 'news') {
-
-            echo wp_get_document_title();
-        }
-        elseif (get_the_ID() ==2786){
-            echo 'Фотогалерея частной школы Гелиос (Мытищи, Королев): отчеты о наших событиях';
-        }elseif ($post_type == 'news'){
-            echo 'Новости школы:'.get_post(get_the_ID())->post_title.'– НЧОУ Гелиос | Мытищи, Королев';
-        }; ?>
-    </title>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -31,39 +23,14 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <?php wp_head(); ?>
-
-    <?php
-    $content_desk = get_post(get_the_ID())->post_content;
-    $deskrip = substr(htmlspecialchars( $content_desk), 0, 200);
-    if(get_the_ID() == 2786) {
-
-        echo '<meta name = "description" content = "Заходите в нашу виртуальную фотогалерею! ">';
-
-    }elseif ($post_type == 'news'){
-        echo '<meta name = "description" content = "'.$deskrip.'">';
-    };?>
 </head>
 
-<body <?= body_class (); ?>>
-
-<header class="header">
-    <div class="container">
-
-        <a class="logo" <?php
-        if (is_front_page()){
-            echo 'style="cursor: default"';
-        }else{
-            echo 'href="/"';
-        }
-        ?>>
-            <svg>
-                <use xlink:href="<?php echo get_template_directory_uri()?>/img/sprite-inline.svg#logo"></use>
-            </svg>
-        </a>
-        <ul class="main-menu">
-            <?php wp_nav_menu( array ( 'theme_location'  => 'selector', 'menu_class' => '.class' ) );?>
-        </ul>
-    </div>
-</header>
-
-<?php get_template_part( 'inc/nav-single' ); ?>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<?php
+if (is_front_page()){
+    echo 'style="cursor: default"';
+}else{
+    echo 'href="/"';
+}
+?>
