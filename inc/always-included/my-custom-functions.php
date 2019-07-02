@@ -11,6 +11,14 @@ function dd($var_dump, $die = false)
     }
 }
 
+## valid this page url 
+function current_url()
+{
+    $url      = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $validURL = str_replace("&", "&amp", $url);
+    return  $validURL;
+}
+
 /**
  * Cuts a string to a certain number of characters without breaking words.
  * Supports multibyte encodings.
