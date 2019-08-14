@@ -33,6 +33,7 @@ include_once 'inc/custom-wp-function/custom-breadcrumb.php';
 include_once 'inc/custom-wp-function/custom-short-cod.php';
 include_once 'inc/custom-wp-function/custom-search-results.php';
 include_once 'inc/custom-wp-function/custom-registration-form-TO-DOO.php';
+include_once 'inc/custom-wp-function/filter-wp-content.php';
 
 ## other function
 include_once 'inc/other-function/wp-admin-ccs.php';
@@ -53,10 +54,12 @@ include_once 'inc/always-included/translate-google.php';
 ## admin panel
 include_once 'inc/admin-panel/menu-option-sidebar.php';
 include_once 'inc/admin-panel/acf-option-page.php';
+include_once 'inc/admin-panel/admin-assets-url.php';
 
 /**
  * File extension function
  * ---------------------------------------------------------------------------------------------------------------------
  */
 
+// admin_assets_url('root-admin');
 

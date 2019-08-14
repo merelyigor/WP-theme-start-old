@@ -13,6 +13,7 @@ function ajax_url_var_add()
     );
 }
 
+
 add_action('wp_enqueue_scripts', function () {
     //----- connect the internal theme style -----
     wp_enqueue_style('style.css', get_template_directory_uri() . '/style.css', array(), time());

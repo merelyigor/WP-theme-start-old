@@ -14,7 +14,7 @@ add_filter('body_class', function ($wp_classes) {
     }
 
     if (is_single()) {
-        $wp_classes[] = 'page-news';
+        $wp_classes[] = 'page-single';
     }
 
     $assoc = [
