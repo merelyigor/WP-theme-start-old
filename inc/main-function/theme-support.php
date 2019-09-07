@@ -40,18 +40,6 @@ add_action('after_setup_theme', function () {
         'caption'
     ));
 
-
-    /************** ------- post format support ------- **************/
-    add_theme_support('post-formats', array(
-        'aside',
-        'image',
-        'video',
-        'gallery'
-    ));
-    //	if ( has_post_format( 'aside' ) ) {
-    //		echo 'Это aside.';
-    //	}
-
 });
 
 
